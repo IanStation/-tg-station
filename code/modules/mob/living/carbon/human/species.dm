@@ -804,6 +804,9 @@
 		if(H.status_flags & GOTTAGOREALLYFAST)
 			mspeed -= 2
 
+		if(H.status_flags & GOTTAGOREALLYREALLYFAST)
+			mspeed -= 5
+
 
 	return mspeed
 

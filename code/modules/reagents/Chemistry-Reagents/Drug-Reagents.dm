@@ -240,6 +240,84 @@
 	..()
 	return
 
+/datum/reagent/drug/methamphetamineplus
+	name = "Methamphetamine+"
+	id = "methamphetamineplus"
+	synth_cost = 10
+	description = "Meth, but better, harder, and more lethal than ever!"
+	reagent_state = LIQUID
+	color = "#60A584" // rgb: 96, 165, 132
+	overdose_threshold = 20
+	addiction_threshold = 10
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/methamphetamineplus/on_mob_life(var/mob/living/M as mob)
+	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
+	if(prob(5))
+		M << "<span class='notice'>[high_message]</span>"
+	M.AdjustParalysis(-5)
+	M.AdjustStunned(-5)
+	M.AdjustWeakened(-5)
+	M.adjustStaminaLoss(-5)
+	M.status_flags |= GOTTAGOREALLYREALLYFAST
+	M.Jitter(5)
+	M.adjustBrainLoss(2)
+	if(prob(5))
+		M.emote(pick("twitch", "shiver"))
+	..()
+	return
+
+/datum/reagent/drug/methamphetamineplus/overdose_process(var/mob/living/M as mob)
+	if(M.canmove && !istype(M.loc, /atom/movable))
+		for(var/i = 0, i < 4, i++)
+			step(M, pick(cardinal))
+	if(prob(20))
+		M.emote("laugh")
+	if(prob(33))
+		M.visible_message("<span class = 'danger'>[M]'s hands flip out and flail everywhere!</span>")
+		var/obj/item/I = M.get_active_hand()
+		if(I)
+			M.drop_item()
+	..()
+	M.adjustToxLoss(5)
+	M.adjustBrainLoss(pick(1, 2, 3, 4, 5, 6)) //dont overdose nigger
+	return
+
+/datum/reagent/drug/methamphetamineplus/addiction_act_stage1(var/mob/living/M as mob)
+	M.Jitter(5)
+	if(prob(20))
+		M.emote(pick("twitch","drool","moan"))
+	..()
+	return
+/datum/reagent/drug/methamphetamineplus/addiction_act_stage2(var/mob/living/M as mob)
+	M.Jitter(10)
+	M.Dizzy(10)
+	if(prob(30))
+		M.emote(pick("twitch","drool","moan"))
+	..()
+	return
+/datum/reagent/drug/methamphetamineplus/addiction_act_stage3(var/mob/living/M as mob)
+	if(M.canmove && !istype(M.loc, /atom/movable))
+		for(var/i = 0, i < 4, i++)
+			step(M, pick(cardinal))
+	M.Jitter(15)
+	M.Dizzy(15)
+	if(prob(40))
+		M.emote(pick("twitch","drool","moan"))
+	..()
+	return
+/datum/reagent/drug/methamphetamineplus/addiction_act_stage4(var/mob/living/carbon/human/M as mob)
+	if(M.canmove && !istype(M.loc, /atom/movable))
+		for(var/i = 0, i < 8, i++)
+			step(M, pick(cardinal))
+	M.Jitter(20)
+	M.Dizzy(20)
+	M.adjustToxLoss(10)
+	if(prob(50))
+		M.emote(pick("twitch","drool","moan"))
+	..()
+	return
+
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
 	id = "bath_salts"

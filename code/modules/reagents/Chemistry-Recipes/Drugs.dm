@@ -32,6 +32,14 @@
 	result_amount = 4
 	required_temp = 374
 
+/datum/chemical_reaction/methamphetamineplus
+	name = "methamphetamineplus"
+	id = "methamphetamineplus"
+	result = "methamphetamineplus"
+	required_reagents = list("ephedrine" = 1, "methamphetamine" = 1, "epinephrine" = 1, "morphine" = 1)
+	result_amount = 2 //hard 2 get yo
+	required_temp = 500
+
 /datum/chemical_reaction/bath_salts
 	name = "bath_salts"
 	id = "bath_salts"
